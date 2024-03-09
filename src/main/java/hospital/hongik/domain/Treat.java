@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
+
 @Entity
 @Getter @Setter
 public class Treat {
@@ -19,6 +22,13 @@ public class Treat {
 
     @ManyToOne
     private Doctor doctor;
+
+    private LocalDate date;
+
+    private Long price;
+
+    @Enumerated(EnumType.STRING)
+    private TreatStatus treatStatus;
 
     //얀관관계 메서드
     public void setPatient(Patient patient) {

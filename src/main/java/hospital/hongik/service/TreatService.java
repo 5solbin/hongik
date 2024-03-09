@@ -3,6 +3,7 @@ package hospital.hongik.service;
 import hospital.hongik.domain.Doctor;
 import hospital.hongik.domain.Patient;
 import hospital.hongik.domain.Treat;
+import hospital.hongik.domain.TreatStatus;
 import hospital.hongik.repository.DoctorRepository;
 import hospital.hongik.repository.PatientRepository;
 import hospital.hongik.repository.TreatRepository;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,7 +35,8 @@ public class TreatService {
 
         //진료 생성
         Treat treat = Treat.createTreat(patient, doctor);
-
+        treat.setTreatStatus(TreatStatus.YET);
+        treat.setDate(LocalDate.now().plusDays(5));
         //저장
         treatRepository.save(treat);
         return treat.getId();
