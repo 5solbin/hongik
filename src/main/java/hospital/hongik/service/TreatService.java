@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,18 +28,28 @@ public class TreatService {
     /**
      * 진료
      **/
-    public Long order(Long patientId, Long doctorId) {
-
-        //엔티티 조회
-        Patient patient = patientRepository.findOne(patientId);
-        Doctor doctor = doctorRepository.findOne(doctorId);
+    public Long order(Patient patient, Doctor doctor, Treat treat) {
 
         //진료 생성
-        Treat treat = Treat.createTreat(patient, doctor);
+        treat.setDoctor(doctor);
+        treat.setPatient(patient);
         treat.setTreatStatus(TreatStatus.YET);
         treat.setDate(LocalDate.now().plusDays(5));
+//        validDuplicateTreat(treat);
         //저장
         treatRepository.save(treat);
         return treat.getId();
+    }
+
+//    private void validDuplicateTreat(Treat treat) {
+//
+//        List<Treat> findTreat = treatRepository.findByDate(treat.getDate());
+//        if (!findTreat.isEmpty()) {
+//            throw new IllegalStateException("해당 날짜에 이미 예약이 있습니다.");
+//        }
+//    }
+
+    public void Done(Treat treat) {
+
     }
 }
