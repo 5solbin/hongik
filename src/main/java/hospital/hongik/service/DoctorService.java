@@ -1,2 +1,4 @@
-package hospital.hongik.service;public class DoctorService {
+package hospital.hongik.service;
+
+public class DoctorService {
 }

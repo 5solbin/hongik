@@ -18,5 +18,14 @@ public class Hospital {
     @Embedded
     private Address address;
 
+    @OneToOne(mappedBy = "hospital" , cascade = CascadeType.ALL)
+    private Department department;
 
+    protected Hospital() {}
+    public Hospital(String name, Address address, Department department) {
+        this.name = name;
+        this.address = address;
+        this.department = department;
+        department.setHospital(this);
+    }
 }

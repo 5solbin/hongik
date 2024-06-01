@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -16,7 +19,19 @@ public class Department {
 
     private String name;
 
-    @OneToOne (fetch = FetchType.LAZY)
+    @OneToOne (fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
+
+    @OneToMany(mappedBy = "department")
+    private List<Doctor> doctors = new ArrayList<>();
+
+    protected Department() {
+
+    }
+
+    // 이건 굳이?
+    public Department(String name) {
+        this.name = name;
+    }
 }
