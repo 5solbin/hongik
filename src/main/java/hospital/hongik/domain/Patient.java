@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter @Setter
 public class Patient {
     //환자 엔티티
-
     @Id
     @GeneratedValue
     @Column(name = "patient_id")
