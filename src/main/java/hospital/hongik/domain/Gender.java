@@ -1,5 +1,5 @@
 package hospital.hongik.domain;
 
 public enum Gender {
-    MALE,FEMALE
+   남,여
 }

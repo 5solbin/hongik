@@ -1,2 +1,4 @@
-package hospital.hongik.controller;public class DoctorForm {
+package hospital.hongik.controller;
+
+public class DoctorForm {
 }

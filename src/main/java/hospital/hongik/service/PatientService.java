@@ -15,7 +15,8 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
 
-    public void savePatient(Patient patient) {
+    @Transactional //요걸 빼먹어 버리네
+    public void join(Patient patient) {
         patientRepository.save(patient);
     }
 
