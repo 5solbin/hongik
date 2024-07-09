@@ -1,7 +1,9 @@
 package hospital.hongik.controller;
 
+import hospital.hongik.domain.Gender;
 import hospital.hongik.domain.Patient;
 import hospital.hongik.service.PatientService;
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -47,5 +49,12 @@ public class PatientController {
         List<Patient> patients = patientService.findPatients();
         model.addAttribute("patients", patients);
         return "patients/patientList";
+    }
+
+    // 테스트용 데이터
+    @PostConstruct
+    public void init() {
+        patientService.join(new Patient("오솔빈", 23, Gender.남));
+        patientService.join(new Patient("이은총", 23, Gender.여));
     }
 }

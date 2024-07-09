@@ -19,4 +19,13 @@ public class Patient {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    public Patient() {
+    }
+
+    public Patient(String name, Integer age, Gender gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
 }
