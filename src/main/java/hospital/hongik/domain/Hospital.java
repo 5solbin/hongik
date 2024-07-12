@@ -21,7 +21,7 @@ public class Hospital {
     @OneToOne(mappedBy = "hospital" , cascade = CascadeType.ALL)
     private Department department;
 
-    protected Hospital() {}
+    public Hospital() {}
     public Hospital(String name, Address address, Department department) {
         this.name = name;
         this.address = address;

@@ -16,6 +16,10 @@ public class HospitalService {
 
     private final HospitalRepository hospitalRepository;
 
+    @Transactional
+    public void join(Hospital hospital) {
+        hospitalRepository.save(hospital);
+    }
     public List<Hospital> findHospitals() {
         return hospitalRepository.findAll();
     }
