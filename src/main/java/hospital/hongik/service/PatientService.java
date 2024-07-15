@@ -24,4 +24,6 @@ public class PatientService {
     public List<Patient> findPatients() {
         return patientRepository.findAll();
     }
+
+
 }

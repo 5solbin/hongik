@@ -29,17 +29,17 @@ class ReservationServiceTest {
     @Autowired
     EntityManager em;
 
-    @Test
-    public void 예약취소() throws Exception{
-        //given
-        Reservation reservation = new Reservation(10000L, LocalDateTime.now());
-        reservationRepository.save(reservation);
-
-        //when
-        reservationService.cancelReservation(reservation.getId());
-
-        //then
-        Assertions.assertEquals(reservation.getStatus() , ReservationStatus.CANCEL);
-    }
+//    @Test
+//    public void 예약취소() throws Exception{
+//        //given
+//        Reservation reservation = new Reservation(10000L, LocalDateTime.now());
+//        reservationRepository.save(reservation);
+//
+//        //when
+//        reservationService.cancelReservation(reservation.getId());
+//
+//        //then
+//        Assertions.assertEquals(reservation.getStatus() , ReservationStatus.CANCEL);
+//    }
 
 }

@@ -21,4 +21,11 @@ public class DoctorReservation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
+
+    public DoctorReservation() {
+    }
+
+    public DoctorReservation(Doctor doctor) {
+        this.doctor = doctor;
+    }
 }

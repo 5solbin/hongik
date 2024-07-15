@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,12 +23,37 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
+    private List<PatientReservation> patientReservations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
+    private List<DoctorReservation> doctorReservations = new ArrayList<>();
+
+
+
     private Long pay;
 
-    public Reservation(Long pay,LocalDateTime time) {
+    public Reservation() {
+    }
+
+    public Reservation(Long pay,LocalDateTime time, Doctor doctor ,Patient patient) {
+        DoctorReservation doctorReservation = new DoctorReservation(doctor);
+        PatientReservation patientReservation = new PatientReservation(patient);
+        this.addDoctorReservation(doctorReservation);
+        this.addPatientReservation(patientReservation);
         this.pay = pay;
         this.time = time;
         this.status = ReservationStatus.READY;
+    }
+
+    public void addDoctorReservation(DoctorReservation doctorReservation) {
+        doctorReservations.add(doctorReservation);
+        doctorReservation.setReservation(this);
+    }
+
+    public void addPatientReservation(PatientReservation patientReservation) {
+        patientReservations.add(patientReservation);
+        patientReservation.setReservation(this);
     }
 
     //==비즈니스 로직==//

@@ -21,4 +21,11 @@ public class PatientReservation {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
+    public PatientReservation() {
+    }
+
+    public PatientReservation(Patient patient) {
+        this.patient = patient;
+    }
+
 }

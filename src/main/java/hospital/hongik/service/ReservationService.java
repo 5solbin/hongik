@@ -1,11 +1,17 @@
 package hospital.hongik.service;
 
+import hospital.hongik.domain.Doctor;
+import hospital.hongik.domain.Patient;
+import hospital.hongik.domain.PatientReservation;
 import hospital.hongik.domain.Reservation;
+import hospital.hongik.repository.DoctorRepository;
+import hospital.hongik.repository.PatientRepository;
 import hospital.hongik.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -13,8 +19,15 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ReservationService {
     private final ReservationRepository reservationRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
 
-    public void save(Reservation reservation) {
+    @Transactional
+    public void reservation (Long patientId, Long doctorId, Long pay, LocalDateTime time) {
+        Doctor doctor = doctorRepository.findOne(doctorId);
+        Patient patient = patientRepository.findOne(patientId);
+
+        Reservation reservation = new Reservation(pay,time,doctor,patient);
         reservationRepository.save(reservation);
     }
 
