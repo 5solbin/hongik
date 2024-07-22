@@ -26,6 +26,7 @@ public class Reservation {
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
     private List<PatientReservation> patientReservations = new ArrayList<>();
 
+
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
     private List<DoctorReservation> doctorReservations = new ArrayList<>();
 

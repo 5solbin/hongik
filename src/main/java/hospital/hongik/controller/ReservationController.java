@@ -1,8 +1,6 @@
 package hospital.hongik.controller;
 
-import hospital.hongik.domain.Doctor;
-import hospital.hongik.domain.Patient;
-import hospital.hongik.domain.Reservation;
+import hospital.hongik.domain.*;
 import hospital.hongik.service.DoctorService;
 import hospital.hongik.service.PatientService;
 import hospital.hongik.service.ReservationService;
@@ -12,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -45,10 +44,29 @@ public class ReservationController {
         return "redirect:/reservations";
     }
 
-//    @GetMapping("/reservations")
-//    public String reservationList(@ModelAttribute("reservationSearch"), Model model) {
-//
-//    }
+    @GetMapping("/reservations")
+    public String reservationList(Model model) {
+
+        List<Reservation> reservations = reservationService.findReservations();
+        List<PatientReservation> patientReservations = new ArrayList<>();
+        List<DoctorReservation> doctorReservations = new ArrayList<>();
+
+        for (Reservation reservation : reservations) {
+            for (DoctorReservation doctorReservation : reservation.getDoctorReservations()){
+                doctorReservations.add(doctorReservation);
+            }
+
+            for (PatientReservation patientReservation : reservation.getPatientReservations()){
+                patientReservations.add(patientReservation);
+            }
+        }
+        model.addAttribute("reservations", reservations);
+        model.addAttribute("patientReservations", patientReservations);
+        model.addAttribute("doctorReservations", doctorReservations);
+
+        return "reservations/reservationList";
+
+    }
 
     @PostMapping("/reservations/{reservationId}/cancel")
     public String cancelReservation(@PathVariable("reservationId") Long reservationId) {

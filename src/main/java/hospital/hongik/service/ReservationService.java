@@ -1,9 +1,6 @@
 package hospital.hongik.service;
 
-import hospital.hongik.domain.Doctor;
-import hospital.hongik.domain.Patient;
-import hospital.hongik.domain.PatientReservation;
-import hospital.hongik.domain.Reservation;
+import hospital.hongik.domain.*;
 import hospital.hongik.repository.DoctorRepository;
 import hospital.hongik.repository.PatientRepository;
 import hospital.hongik.repository.ReservationRepository;

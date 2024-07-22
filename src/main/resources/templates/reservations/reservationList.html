@@ -2,45 +2,51 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"/>
 <body>
-<div class="container">
-  <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-  <div> <div>
-    <form th:object="${orderSearch}" class="form-inline">
-      <div class="form-group mb-2">
-        <input type="text" th:field="*{memberName}" class="form- control" placeholder="회원명"/>
-      </div>
-      <div class="form-group mx-sm-1 mb-2">
-        <select th:field="*{orderStatus}" class="form-control"> <option value="">예약상태</option>
-          <option th:each=
-                          "status : ${T(jpabook.jpashop.domain.OrderStatus).values()}"
-                  th:value="${status}"
-                  th:text="${status}">option
-          </option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary mb-2">검색</button> </form>
-  </div>
+<!--<div class="container">-->
+<!--  <div th:replace="fragments/bodyHeader :: bodyHeader"/>-->
+<!--  <div> <div>-->
+<!--    <form th:object="${reservationSearch}" class="form-inline">-->
+<!--      <div class="form-group mb-2">-->
+<!--        <input type="text" th:field="*{patientName}" class="form- control" placeholder="환자명"/>-->
+<!--      </div>-->
+<!--      <div class="form-group mx-sm-1 mb-2">-->
+<!--        <select th:field="*{reservationStatus}" class="form-control"> <option value="">예약상태</option>-->
+<!--          <option th:each=-->
+<!--                          "status : ${T(hospital.hongik.domain.ReservationStatus).values()}"-->
+<!--                  th:value="${status}"-->
+<!--                  th:text="${status}">option-->
+<!--          </option>-->
+<!--        </select>-->
+<!--      </div>-->
+<!--      <button type="submit" class="btn btn-primary mb-2">검색</button> </form>-->
+<!--  </div>-->
     <table class="table table-striped">
       <thead>
       <tr>
-        <th>#</th> <th>회원명</th> <th>대표상품 이름</th> <th>대표상품 주문가격</th> <th>대표상품 주문수량</th> <th>상태</th> <th>일시</th> <th></th>
+        <th>#</th> <th>상태</th> <th>예약 날짜</th> <th>환자명</th> <th>의사명</th>  <th></th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="item : ${orders}">
-        <td th:text="${item.id}"></td>
-        <td th:text="${item.member.name}"></td>
-        <td th:text="${item.orderItems[0].item.name}"></td>
-        <td th:text="${item.orderItems[0].orderPrice}"></td>
-        <td th:text="${item.orderItems[0].count}"></td>
-        <td th:text="${item.status}"></td>
-        <td th:text="${item.orderDate}"></td>
+      <tr th:each="reservation : ${reservations}">
+        <td th:text="${reservation.id}"></td>
+        <td th:text="${reservation.status}"></td>
+        <td th:text="${reservation.time}"></td>
+
+        <td th:each="patientReservation : ${patientReservations}"
+            th:if="${patientReservation.reservation.id == reservation.id}"
+            th:text="${patientReservation.patient.name}"></td>
+
+        <td th:each="doctorReservation : ${doctorReservations}"
+            th:if="${doctorReservation.reservation.id == reservation.id}"
+            th:text="${doctorReservation.doctor.name}"></td>
+
         <td>
-          <a th:if="${item.status.name() == 'ORDER'}" href="#"
-             th:href="'javascript:cancel('+${item.id}+')'"
+          <a th:if="${reservation.status.name() == 'READY'}" href="#"
+             th:href="'javascript:cancel('+${reservation.id}+')'"
              class="btn btn-danger">CANCEL</a>
         </td>
       </tr>
+
       </tbody>
     </table>
   </div>
@@ -51,7 +57,7 @@
   function cancel(id) {
     var form = document.createElement("form");
     form.setAttribute("method", "post");
-    form.setAttribute("action", "/orders/" + id + "/cancel");
+    form.setAttribute("action", "/reservations/" + id + "/cancel");
     document.body.appendChild(form);
     form.submit();
   } </script>
